@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Munna 😈</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#05060d;color:#fff}
+body{display:flex;align-items:center;justify-content:center}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.overlay{position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,rgba(92,60,170,.18),transparent 45%),linear-gradient(135deg,#05060d,#0d0718 55%,#03040a);z-index:1}
+.screen{position:relative;z-index:2;width:min(92vw,560px);text-align:center;padding:25px}
+.hidden{display:none!important}
+.intro{animation:fadeIn 1.2s ease}
+.kicker{letter-spacing:5px;text-transform:uppercase;color:#a99cff;font-size:12px}
+h1{font-size:clamp(38px,10vw,68px);margin:12px 0;background:linear-gradient(90deg,#fff,#b7a9ff,#fff);-webkit-background-clip:text;color:transparent}
+.sub{color:#b9b7c9;font-size:15px}
+button{border:0;border-radius:999px;padding:14px 27px;margin-top:22px;font-weight:800;font-size:15px;color:#09080f;background:linear-gradient(135deg,#fff,#bbaeff);box-shadow:0 0 35px rgba(160,140,255,.28);cursor:pointer}
+button:active{transform:scale(.96)}
+.card{background:rgba(15,14,28,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);border-radius:28px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.4);animation:rise .9s ease}
+.photo{width:min(250px,70vw);height:min(250px,70vw);object-fit:cover;border-radius:50%;border:3px solid rgba(255,255,255,.7);box-shadow:0 0 45px rgba(150,120,255,.35);animation:float 4s ease-in-out infinite}
+.name{font-size:clamp(42px,11vw,72px);font-weight:900;margin:12px 0 4px}
+.message{font-size:16px;line-height:1.8;color:#ddd9e9;margin:12px auto;max-width:470px}
+.badge{display:inline-block;margin-top:8px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.08);font-size:12px;color:#cfc7ff}
+#count{font-size:14px;color:#a99cff;margin-top:12px}
+.confetti{position:fixed;width:8px;height:14px;z-index:5;pointer-events:none;animation:fall 2.8s linear forwards}
+@keyframes fall{to{transform:translate3d(var(--x),110vh,0) rotate(720deg);opacity:0}}
+@keyframes fadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{50%{transform:translateY(-8px)}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas><div class="overlay"></div>
+
+<section class="screen intro" id="intro">
+  <div class="kicker">A little surprise for</div>
+  <h1>Munna 😈</h1>
+  <div class="sub">Don't expect a normal birthday wish. 😎</div>
+  <button id="open">OPEN THE SURPRISE ✨</button>
+  <div id="count">Tap only if you're ready...</div>
+</section>
+
+<section class="screen hidden" id="wish">
+  <div class="card">
+    <img class="photo" src="munna.jpg" alt="Munna">
+    <div class="name">HAPPY BIRTHDAY</div>
+    <div class="badge">MUNNA 😎🔥</div>
+    <p class="message">
+      Happy Birthday, bro! 🎂<br>
+      Life gets better when you have a few genuinely good people around,
+      and I'm glad you're one of them. Keep smiling, keep doing your thing,
+      and keep that crazy confidence alive. 😈😎<br><br>
+      May this new year of your life bring you more happiness, success,
+      unforgettable memories and plenty of reasons to say,
+      “Yeah bro, life is good!” 🖤✨
+    </p>
+    <div style="font-size:13px;color:#aaa">Stay awesome. Stay exactly you. 🤝</div>
+  </div>
+</section>
+
+<script>
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');
+let stars=[];
+function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}
+resize();addEventListener('resize',resize);
+for(let i=0;i<120;i++)stars.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.7+.2,a:Math.random(),s:Math.random()*.015+.004});
+function starLoop(){
+ ctx.clearRect(0,0,innerWidth,innerHeight);
+ for(const p of stars){p.a+=p.s;if(p.a>1||p.a<.1)p.s*=-1;ctx.globalAlpha=p.a;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}
+ requestAnimationFrame(starLoop)
+} starLoop();
+
+const open=document.getElementById('open');
+open.addEventListener('click',()=>{
+ document.getElementById('intro').classList.add('hidden');
+ document.getElementById('wish').classList.remove('hidden');
+ burst(); music();
+});
+function burst(){
+ for(let i=0;i<100;i++){
+  const c=document.createElement('i');c.className='confetti';
+  c.style.left=Math.random()*100+'vw';c.style.top='-20px';
+  c.style.setProperty('--x',(Math.random()*240-120)+'px');
+  c.style.animationDelay=(Math.random()*1.1)+'s';
+  c.style.transform=`rotate(${Math.random()*360}deg)`;
+  c.style.background=`hsl(${Math.random()*360} 90% 70%)`;
+  document.body.appendChild(c);setTimeout(()=>c.remove(),4000);
+ }
+}
+// A tiny original synth melody — no external music file required.
+function music(){
+ const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+ const ac=new AC(),notes=[261.63,329.63,392,523.25,392,329.63,293.66,349.23,440,523.25,440,349.23];
+ let t=ac.currentTime+.05;
+ notes.forEach((f,i)=>{let o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t+i*.28);g.gain.exponentialRampToValueAtTime(.055,t+i*.28+.03);g.gain.exponentialRampToValueAtTime(.0001,t+i*.28+.24);o.connect(g).connect(ac.destination);o.start(t+i*.28);o.stop(t+i*.28+.25)});
+}
+</script>
+</body>
+</html>
